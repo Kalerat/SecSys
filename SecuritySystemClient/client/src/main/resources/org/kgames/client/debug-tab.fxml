@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kgames.client.controller.DebugTabController">
+   <children>
+      <!-- Header Section -->
+      <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #2d2d2d; -fx-padding: 10;">
+         <children>
+            <Label style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="MQTT Debug Console" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Label style="-fx-text-fill: #cccccc; -fx-font-size: 12px;" text="Test MQTT connections and message publishing" />
+         </children>
+      </HBox>
+
+      <!-- Connection Configuration -->
+      <VBox spacing="10.0" style="-fx-background-color: #252525; -fx-padding: 15;">
+         <children>
+            <Label style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 14px;" text="Connection Settings" />
+            
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <Label style="-fx-text-fill: #ffffff;" text="Broker:" />
+                  <TextField fx:id="mqttBrokerField" promptText="tcp://broker-address:port" style="-fx-pref-width: 250;" />
+                  
+                  <Label style="-fx-text-fill: #ffffff;" text="Topic:" />
+                  <TextField fx:id="mqttTopicField" promptText="topic/name" style="-fx-pref-width: 200;" />
+                  
+                  <Button fx:id="mqttConnectButton" onAction="#onMqttConnectButtonClick" style="-fx-background-color: #28a745; -fx-text-fill: #ffffff; -fx-font-weight: bold;" text="Connect" />
+                  <Button fx:id="mqttDisconnectButton" onAction="#onMqttDisconnectButtonClick" style="-fx-background-color: #dc3545; -fx-text-fill: #ffffff; -fx-font-weight: bold;" text="Disconnect" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+
+      <!-- Message Publishing -->
+      <VBox spacing="10.0" style="-fx-background-color: #1e1e1e; -fx-padding: 15;">
+         <children>
+            <Label style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 14px;" text="Message Publishing" />
+            
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+               <children>
+                  <Button fx:id="mqttTestButton" disable="true" onAction="#onMqttTestButtonClick" style="-fx-background-color: #0078d4; -fx-text-fill: #ffffff;" text="Send Test Message" />
+                  
+                  <Separator orientation="VERTICAL" />
+                  
+                  <Label style="-fx-text-fill: #ffffff;" text="Custom Message:" />
+                  <TextField fx:id="mqttPublishField" promptText="Enter message to publish..." style="-fx-pref-width: 300;" />
+                  <Button fx:id="mqttPublishButton" disable="true" onAction="#onMqttPublishButtonClick" style="-fx-background-color: #ffc107; -fx-text-fill: #000000; -fx-font-weight: bold;" text="Publish" />
+               </children>
+            </HBox>
+            
+            <Label style="-fx-text-fill: #cccccc; -fx-font-size: 12px;" text="Custom messages are published to the commands topic. Press Enter in the text field to publish quickly." />
+         </children>
+      </VBox>
+
+      <!-- Log Area -->
+      <VBox VBox.vgrow="ALWAYS">
+         <children>
+            <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #2d2d2d; -fx-padding: 10;">
+               <children>
+                  <Label style="-fx-text-fill: #ffffff; -fx-font-weight: bold; -fx-font-size: 14px;" text="MQTT Log" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Button fx:id="clearLogButton" onAction="#onClearLogClick" style="-fx-background-color: #6c757d; -fx-text-fill: #ffffff;" text="Clear Log" />
+               </children>
+            </HBox>
+            
+            <TextArea fx:id="mqttLogArea" style="-fx-control-inner-background: #1e1e1e; -fx-text-fill: #ffffff; -fx-font-family: 'Consolas', 'Monaco', monospace; -fx-font-size: 12px;" VBox.vgrow="ALWAYS" />
+         </children>
+      </VBox>
+
+      <!-- Status Bar -->
+      <HBox alignment="CENTER_LEFT" style="-fx-background-color: #252525; -fx-padding: 5 10;">
+         <children>
+            <Label style="-fx-text-fill: #cccccc; -fx-font-size: 12px;" text="Status: Use this console to test MQTT connections and debug message flow" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</VBox>

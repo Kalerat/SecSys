@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="org.kgames.client.controller.ConfigurationTabController"
+      spacing="12" style="-fx-background-color: #2d2d2d;">
+  <padding>
+    <Insets top="15" right="15" bottom="15" left="15"/>
+  </padding>
+  <Label text="System Configuration" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+  
+  <!-- Media Storage Configuration -->
+  <VBox spacing="10" styleClass="card">
+    <padding>
+      <Insets top="12" right="12" bottom="12" left="12"/>
+    </padding>
+    <Label text="Media Storage Settings" styleClass="label,subtitle"/>
+    
+    <!-- Custom Paths Toggle -->
+    <HBox spacing="8" alignment="CENTER_LEFT">
+      <CheckBox fx:id="customPathsCheckBox" text="Use custom storage paths" 
+                onAction="#onCustomPathsToggled" styleClass="label"/>
+      <Label text="(Default: Documents/SecuritySystem/Media)" styleClass="label,caption"/>
+    </HBox>
+    
+    <!-- Recordings Path -->
+    <VBox spacing="4">
+      <Label text="Recordings Directory:" styleClass="label,caption"/>
+      <HBox spacing="8" alignment="CENTER_LEFT">
+        <TextField fx:id="recordingsPathField" prefWidth="400" HBox.hgrow="ALWAYS"
+                   styleClass="search-field"/>
+        <Button fx:id="browseRecordingsButton" text="Browse..." onAction="#onBrowseRecordingsPath"
+                styleClass="button,secondary" prefHeight="28" prefWidth="80"/>
+      </HBox>
+    </VBox>
+    
+    <!-- Screenshots Path -->
+    <VBox spacing="4">
+      <Label text="Screenshots Directory:" styleClass="label,caption"/>
+      <HBox spacing="8" alignment="CENTER_LEFT">
+        <TextField fx:id="screenshotsPathField" prefWidth="400" HBox.hgrow="ALWAYS"
+                   styleClass="search-field"/>
+        <Button fx:id="browseScreenshotsButton" text="Browse..." onAction="#onBrowseScreenshotsPath"
+                styleClass="button,secondary" prefHeight="28" prefWidth="80"/>
+      </HBox>
+    </VBox>
+    
+    <!-- Configuration Actions -->
+    <HBox spacing="12" alignment="CENTER_LEFT">
+      <Button fx:id="saveConfigButton" text="Save Configuration" onAction="#onSaveConfiguration"
+              styleClass="button,success" prefHeight="32"/>
+      <Button fx:id="resetConfigButton" text="Reset to Defaults" onAction="#onResetConfiguration"
+              styleClass="button,warning" prefHeight="32"/>
+      <Button fx:id="validatePathsButton" text="Validate Paths" onAction="#onValidatePaths"
+              styleClass="button,primary" prefHeight="32"/>
+      
+      <!-- Spacer -->
+      <Region HBox.hgrow="ALWAYS"/>
+      
+      <Label fx:id="configStatusLabel" text="Configuration loaded" styleClass="label,caption"/>
+    </HBox>
+  </VBox>
+  
+  <!-- Configuration Summary -->
+  <VBox spacing="8" styleClass="card">
+    <padding>
+      <Insets top="12" right="12" bottom="12" left="12"/>
+    </padding>
+    <Label text="Current Configuration" styleClass="label,subtitle"/>
+    <TextArea fx:id="configSummaryArea" prefRowCount="8" prefColumnCount="50" editable="false"
+              styleClass="code-area" wrapText="true"/>
+  </VBox>
+</VBox>

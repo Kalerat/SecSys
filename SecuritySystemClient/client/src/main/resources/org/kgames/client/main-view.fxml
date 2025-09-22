@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kgames.client.controller.MainController">
+   <center>
+      <TabPane fx:id="mainTabPane" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #2d2d2d; -fx-text-base-color: #ffffff; -fx-focus-color: transparent; -fx-faint-focus-color: transparent;" tabClosingPolicy="UNAVAILABLE" />
+   </center>
+</BorderPane>

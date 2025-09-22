@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kgames.client.controller.MediaBrowserTabController">
+   <children>
+      <!-- Left Panel: File List -->
+      <VBox minWidth="350.0" prefWidth="350.0" style="-fx-background-color: #2d2d2d;">
+         <children>
+            <!-- Header -->
+            <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #252525; -fx-padding: 10;">
+               <children>
+                  <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Media Files" />
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label fx:id="mediaCountLabel" style="-fx-text-fill: #cccccc;" text="(0 files)" />
+               </children>
+            </HBox>
+
+            <!-- Filter Controls -->
+            <VBox spacing="5.0" style="-fx-background-color: #1e1e1e; -fx-padding: 10;">
+               <children>
+                  <!-- First row: Type filter and Search -->
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label style="-fx-text-fill: #ffffff;" text="Type:" />
+                        <ComboBox fx:id="mediaTypeFilter" style="-fx-pref-width: 120;" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="refreshButton" onAction="#onRefreshButtonClick" style="-fx-background-color: #0078d4; -fx-text-fill: #ffffff;" text="Refresh" />
+                     </children>
+                  </HBox>
+                  
+                  <!-- Second row: Name filter -->
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label style="-fx-text-fill: #ffffff;" text="Name:" />
+                        <TextField fx:id="nameFilterField" promptText="Filter by filename..." style="-fx-pref-width: 200;" />
+                        <Button fx:id="clearFiltersButton" onAction="#onClearFiltersButtonClick" style="-fx-background-color: #6c757d; -fx-text-fill: #ffffff; -fx-font-size: 12px;" text="Clear" />
+                     </children>
+                  </HBox>
+                  
+                  <!-- Third row: Date filter -->
+                  <HBox alignment="CENTER_LEFT" spacing="10.0">
+                     <children>
+                        <Label style="-fx-text-fill: #ffffff;" text="Date:" />
+                        <ComboBox fx:id="dateRangeFilter" style="-fx-pref-width: 150;" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label fx:id="filterStatusLabel" style="-fx-text-fill: #cccccc; -fx-font-size: 11px;" text="No filters applied" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+
+            <!-- File List -->
+            <ListView fx:id="mediaListView" style="-fx-background-color: #2d2d2d; -fx-control-inner-background: #2d2d2d;" VBox.vgrow="ALWAYS" />
+
+            <!-- Action Buttons -->
+            <HBox spacing="5.0" style="-fx-background-color: #252525; -fx-padding: 10;">
+               <children>
+                  <Button fx:id="openFileButton" disable="true" onAction="#onOpenFileButtonClick" style="-fx-background-color: #28a745; -fx-text-fill: #ffffff; -fx-font-size: 12px;" text="Open" />
+                  <Button fx:id="openFolderButton" onAction="#onOpenFolderButtonClick" style="-fx-background-color: #0078d4; -fx-text-fill: #ffffff; -fx-font-size: 12px;" text="Open Folder" />
+                  <Button fx:id="exportFileButton" disable="true" onAction="#onExportFileButtonClick" style="-fx-background-color: #17a2b8; -fx-text-fill: #ffffff; -fx-font-size: 12px;" text="Export" />
+                  <Button fx:id="deleteFileButton" disable="true" onAction="#onDeleteFileButtonClick" style="-fx-background-color: #dc3545; -fx-text-fill: #ffffff; -fx-font-size: 12px;" text="Delete" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+
+      <!-- Right Panel: Preview and Details -->
+      <VBox HBox.hgrow="ALWAYS" style="-fx-background-color: #1e1e1e;">
+         <children>
+            <!-- Preview Header -->
+            <HBox alignment="CENTER_LEFT" style="-fx-background-color: #252525; -fx-padding: 10;">
+               <children>
+                  <Label style="-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="Preview" />
+               </children>
+            </HBox>
+
+            <!-- Media Preview -->
+            <VBox alignment="CENTER" style="-fx-background-color: #1a1a1a; -fx-padding: 20;" VBox.vgrow="ALWAYS">
+               <children>
+                  <!-- Shared Media Container -->
+                  <StackPane fx:id="mediaContainer" style="-fx-background-color: #2d2d2d; -fx-border-color: #404040; -fx-border-width: 2px;" VBox.vgrow="ALWAYS">
+                     <children>
+                        <!-- Image Preview -->
+                        <ImageView fx:id="previewImageView" pickOnBounds="true" preserveRatio="true" />
+                        
+                        <!-- Video Preview Container -->
+                        <VBox fx:id="videoPlayerContainer" alignment="CENTER" visible="false">
+                           <children>
+                              <!-- Video controls will be added programmatically -->
+                              <HBox fx:id="videoControlsBox" alignment="CENTER" spacing="10.0" style="-fx-background-color: #252525; -fx-padding: 10;">
+                                 <children>
+                                    <Button fx:id="playPauseButton" onAction="#onPlayPauseButtonClick" style="-fx-background-color: #28a745; -fx-text-fill: #ffffff;" text="Play" />
+                                    <Button fx:id="stopButton" onAction="#onStopButtonClick" style="-fx-background-color: #dc3545; -fx-text-fill: #ffffff;" text="Stop" />
+                                    <Label style="-fx-text-fill: #ffffff;" text="Volume:" />
+                                    <Slider fx:id="volumeSlider" blockIncrement="10.0" max="100.0" showTickLabels="true" showTickMarks="true" value="50.0" style="-fx-pref-width: 100;" />
+                                    <Label fx:id="timeLabel" style="-fx-text-fill: #cccccc;" text="00:00 / 00:00" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </StackPane>
+               </children>
+            </VBox>
+
+            <!-- File Details -->
+            <VBox style="-fx-background-color: #252525; -fx-padding: 15;">
+               <children>
+                  <Label style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #ffffff;" text="File Details" />
+                  <Label fx:id="mediaInfoLabel" style="-fx-text-fill: #cccccc; -fx-font-size: 12px; -fx-wrap-text: true; -fx-padding: 5 0 0 0;" text="Select a file to view details" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+</HBox>

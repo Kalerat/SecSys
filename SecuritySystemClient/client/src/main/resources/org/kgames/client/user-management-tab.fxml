@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<HBox xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.kgames.client.controller.UserManagementTabController" spacing="15" style="-fx-background-color: #2d2d2d;" HBox.hgrow="ALWAYS">
+   <padding>
+      <Insets top="15" right="15" bottom="15" left="15"/>
+   </padding>
+   
+   <!-- Left Side: User Management -->
+   <VBox spacing="12" HBox.hgrow="ALWAYS" minWidth="500" maxWidth="Infinity">
+      <Label text="User Management" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+      
+      <!-- Filter Controls Section -->
+      <VBox spacing="10" styleClass="card">
+         <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+         </padding>
+         <Label text="Filter Users" styleClass="label,subtitle"/>
+         
+         <!-- Search and Filter Row -->
+         <HBox spacing="12" alignment="CENTER_LEFT">
+            <!-- Search Bar -->
+            <VBox spacing="4" HBox.hgrow="ALWAYS">
+               <Label text="Search:" style="-fx-text-fill: #ffffff;"/>
+               <TextField fx:id="userSearchField" promptText="Search by name or contact..." prefWidth="200"/>
+            </VBox>
+            
+            <!-- Role Filter -->
+            <VBox spacing="4">
+               <Label text="Role:" style="-fx-text-fill: #ffffff;"/>
+               <ComboBox fx:id="roleFilterComboBox" prefWidth="120"/>
+            </VBox>
+            
+            <!-- Security Level Filter -->
+            <VBox spacing="4">
+               <Label text="Security Level:" style="-fx-text-fill: #ffffff;"/>
+               <ComboBox fx:id="securityLevelFilterComboBox" prefWidth="120"/>
+            </VBox>
+            
+            <!-- Clear Filters Button -->
+            <VBox spacing="4">
+               <Label text=" " style="-fx-text-fill: transparent;"/> <!-- Spacer -->
+               <Button fx:id="clearFiltersButton" text="Clear Filters" onAction="#onClearFilters" prefHeight="26"/>
+            </VBox>
+         </HBox>
+         
+         <!-- Filter Status -->
+         <HBox spacing="8" alignment="CENTER_LEFT">
+            <Label fx:id="filterStatusLabel" text="Showing all users" styleClass="label,caption"/>
+            <Label fx:id="userCountLabel" text="(0 users)" styleClass="label,caption"/>
+         </HBox>
+      </VBox>
+      
+      <!-- User Table -->
+      <TableView fx:id="userTable" VBox.vgrow="ALWAYS" minHeight="200" maxHeight="Infinity" prefHeight="400"
+                 styleClass="user-management-table" maxWidth="Infinity">
+         <columns>
+            <TableColumn fx:id="userIdColumn" text="User ID" prefWidth="70" minWidth="50" 
+                         sortable="true"/>
+            <TableColumn fx:id="userNameColumn" text="Name" prefWidth="150" minWidth="80" 
+                         sortable="true"/>
+            <TableColumn fx:id="userRoleColumn" text="Role" prefWidth="100" minWidth="60" 
+                         sortable="true"/>
+            <TableColumn fx:id="userSecurityLevelColumn" text="Security Level" prefWidth="120" minWidth="80" 
+                         sortable="true"/>
+            <TableColumn fx:id="userContactInfoColumn" text="Contact Info" prefWidth="200" minWidth="100" 
+                         sortable="true"/>
+            <TableColumn fx:id="userRfidUidColumn" text="RFID Card UID" prefWidth="180" minWidth="100" 
+                         sortable="true"/>
+            <TableColumn fx:id="userCreatedAtColumn" text="Created At" prefWidth="160" minWidth="100" 
+                         sortable="true"/>
+         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+         </columnResizePolicy>
+      </TableView>
+      
+      <!-- Action Buttons - Always Visible Section -->
+      <HBox spacing="12" alignment="CENTER_LEFT" VBox.vgrow="NEVER" minHeight="50" styleClass="action-buttons-area">
+         <Button fx:id="addUserButton" text="Add User" onAction="#onAddUser"
+                 styleClass="button,success" prefHeight="32"/>
+         <Button fx:id="editUserButton" text="Edit User" onAction="#onEditUser"
+                 styleClass="button,warning" prefHeight="32" disable="true"/>
+         <Button fx:id="removeUserButton" text="Remove User" onAction="#onRemoveUser"
+                 styleClass="button,danger" prefHeight="32" disable="true"/>
+         
+         <!-- Spacer -->
+         <Region HBox.hgrow="ALWAYS"/>
+         
+         <!-- Export/Import Actions -->
+         <Button fx:id="exportUsersButton" text="Export CSV" onAction="#onExportUsers"
+                 styleClass="button,secondary" prefHeight="32"/>
+         <Button fx:id="refreshUsersButton" text="Refresh" onAction="#onRefreshUsers"
+                 styleClass="button,primary" prefHeight="32"/>
+      </HBox>
+   </VBox>
+   
+   <!-- Right Side: RFID Card Encoder -->
+   <VBox spacing="12" minWidth="350" maxWidth="450" prefWidth="400" style="-fx-background-color: #2d2d2d;">
+      <Label text="RFID Card Encoder" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #ffffff;"/>
+
+      <!-- Selected User Display -->
+      <VBox spacing="8" styleClass="card">
+         <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+         </padding>
+         <Label text="Selected User:" styleClass="label,subtitle"/>
+         <Label fx:id="selectedUserLabel" text="No user selected" styleClass="label,status-warning"/>
+         <Label fx:id="selectedUserDetailsLabel" text="Select a user from the table to encode RFID card" 
+                styleClass="label,caption"/>
+      </VBox>
+
+      <!-- Secret Source Selection -->
+      <VBox spacing="8" styleClass="card">
+         <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+         </padding>
+         <Label text="Secret Key Source:" styleClass="label,subtitle"/>
+         <RadioButton fx:id="manualSecretRadio" text="Enter secret manually" 
+                      styleClass="label"/>
+         <HBox spacing="12" alignment="CENTER_LEFT">
+            <TextField fx:id="manualSecretField" promptText="16 hex characters (0-9, A-F)" 
+                       prefWidth="200" disable="true"/>
+         </HBox>
+
+         <RadioButton fx:id="databaseUserRadio" text="Use selected user's ID" 
+                      styleClass="label" selected="true"/>
+         <Label text="Uses the selected user's database ID as secret key" 
+                styleClass="label,caption"/>
+      </VBox>
+
+      <!-- Selected Secret Display -->
+      <VBox spacing="8" styleClass="card">
+         <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+         </padding>
+         <Label text="Selected Secret:" styleClass="label,subtitle"/>
+         <Label fx:id="selectedSecretLabel" text="No valid secret selected" styleClass="label,status-error"/>
+      </VBox>
+
+      <!-- Write Process -->
+      <VBox spacing="12" styleClass="card" VBox.vgrow="ALWAYS">
+         <padding>
+            <Insets top="12" right="12" bottom="12" left="12"/>
+         </padding>
+         <HBox spacing="12" alignment="CENTER_LEFT">
+            <Button fx:id="initializeWriteButton" text="Initialize RFID Write" onAction="#onInitializeWrite"
+                    styleClass="button,primary" prefHeight="32" disable="true"/>
+            <Button fx:id="clearStatusButton" text="Clear Status" onAction="#onClearStatus"
+                    styleClass="button,secondary" prefHeight="32"/>
+         </HBox>
+
+         <VBox spacing="8" VBox.vgrow="ALWAYS">
+            <Label text="Write Status:" styleClass="label,subtitle"/>
+            <TextArea fx:id="statusArea" prefRowCount="8" editable="false" wrapText="true" VBox.vgrow="ALWAYS"
+                      styleClass="code-area"/>
+            <ProgressIndicator fx:id="progressIndicator" visible="false"/>
+         </VBox>
+      </VBox>
+   </VBox>
+</HBox>

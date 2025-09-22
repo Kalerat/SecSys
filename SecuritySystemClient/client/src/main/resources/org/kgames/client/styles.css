@@ -1,0 +1,38 @@
+/* Additional styles for Security System components */
+
+/* Import the main dark theme */
+@import "dark-theme.css";
+
+/* Dialog-specific overrides and additions */
+.dialog-pane .button-bar .button {
+    -fx-pref-width: 100px;
+    -fx-pref-height: 32px;
+}
+
+.dialog-pane .combo-box {
+    -fx-pref-height: 32px;
+}
+
+.dialog-pane .combo-box .list-cell {
+    -fx-text-fill: #e0e0e0;
+}
+
+.dialog-pane .combo-box .list-cell:selected {
+    background-color: #0078d4;
+    -fx-background-color: #0078d4;
+    -fx-text-fill: white;
+}
+
+/* Card styling */
+.card {
+    background-color: #353535;
+    border-color: #505050;
+    border-width: 1px;
+    border-radius: 6px;
+    -fx-background-color: #353535;
+    -fx-border-color: #505050;
+    -fx-border-width: 1px;
+    -fx-background-radius: 6px;
+    -fx-border-radius: 6px;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.3), 4, 0, 0, 2);
+}
