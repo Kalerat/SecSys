@@ -1,6 +1,10 @@
 # Security System Project
 
+> ⚠️ **Development Notice**: This project is currently under active development. Some features described in this documentation may not yet be fully implemented or may be subject to change. Please refer to the current codebase for the actual feature set, as this project is intended for educational and demonstration purposes only.
+
 A comprehensive IoT security system built with Arduino Uno R3, Raspberry Pi Pico W, and a JavaFX client application. The system provides motion detection, RFID authentication, and real-time monitoring capabilities through MQTT communication.
+
+
 
 ## 🌟 Features
 
@@ -15,9 +19,6 @@ A comprehensive IoT security system built with Arduino Uno R3, Raspberry Pi Pico
 
 ## 📱 Client Application Examples
 
-### Main Dashboard
-![Main Dashboard](docs/images/main-dashboard.png)
-*The main dashboard showing system status, recent events, and quick controls*
 
 ### Security Tab
 ![Security Tab](docs/images/security-tab.png)
@@ -26,6 +27,10 @@ A comprehensive IoT security system built with Arduino Uno R3, Raspberry Pi Pico
 ### User Management
 ![User Management](docs/images/user-management.png)
 *User management interface for adding/removing RFID cards and managing permissions*
+
+### Media Browser
+![Media Browser](docs/images/media-browser-tab.png)
+*A simple Media Browser to view recorded camera feeds*
 
 ### Configuration Settings
 ![Configuration](docs/images/configuration-tab.png)
